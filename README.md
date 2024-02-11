@@ -1,4 +1,4 @@
-# dockEase
+# DockEasy
 
 Projeto para estudo de nuxt e uma tentaiva de criar uma UI para simplificar a criação de instâncias via docker na OCI. 
 
