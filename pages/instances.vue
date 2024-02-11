@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { TContainer } from '~/composables/container.types'
+definePageMeta({
+  layout: 'private'
+})
 
 const queries = reactive({
   all: false,

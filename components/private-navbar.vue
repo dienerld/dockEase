@@ -56,21 +56,11 @@ const toggleOpen = () => {
           </li>
           <li>
             <NuxtLink
-              to="/"
+              to="/instances"
               class="border-b-2 border-transparent px-2 py-4 text-sm text-primary-content hover:border-secondary-content hover:text-secondary-content md:px-2
             lg:px-6"
             >
-              Novos cursos
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/"
-              class="border-b-2 border-transparent px-2 py-4 text-sm text-primary-content hover:border-secondary-content hover:text-secondary-content md:px-2
-            lg:px-6"
-            >
-              <span class="hidden lg:inline"> Cursos </span>
-              Gratuito
+              Listar Instâncias
             </NuxtLink>
           </li>
         </ul>
