@@ -1,6 +1,37 @@
 <script setup lang="ts">
 const isOpen = ref(false)
 
+const routes = [
+  {
+    label: 'Usuários',
+    path: '/users',
+    childrens: [
+      {
+        label: 'Listar',
+        path: '/'
+      },
+      {
+        label: 'Criar',
+        path: '/create'
+      }
+    ]
+  },
+  {
+    label: 'Containers',
+    path: '/instances',
+    childrens: [
+      {
+        label: 'Listar',
+        path: '/'
+      },
+      {
+        label: 'Criar',
+        path: '/create'
+      }
+
+    ]
+  }
+]
 const toggleOpen = () => {
   isOpen.value = !isOpen.value
 }
@@ -8,16 +39,16 @@ const toggleOpen = () => {
 </script>
 
 <template>
-  <div class="mx-auto w-full border-b bg-primary 2xl:max-w-7xl">
-    <div class="relative mx-auto flex w-full flex-col bg-primary p-4 md:flex-row md:items-center md:justify-between md:px-6 lg:px-8">
+  <div class="mx-auto w-full border-b bg-base-300 2xl:max-w-7xl">
+    <div class="relative mx-auto flex w-full flex-col p-4 md:flex-row md:items-center md:justify-between md:px-6 lg:px-8">
       <div class="flex flex-row items-center justify-between lg:justify-start">
-        <NuxtLink class="text-lg uppercase tracking-tight text-primary-content focus:outline-none focus:ring lg:text-2xl" href="/">
+        <NuxtLink class="text-lg uppercase tracking-tight text-base-content focus:outline-none focus:ring lg:text-2xl" href="/">
           <span class="uppercase focus:ring-0 lg:text-lg">
             windstatic
           </span>
         </NuxtLink>
         <button
-          class="inline-flex items-center justify-center p-2 text-primary-content hover:text-secondary-content focus:text-secondary-content focus:outline-none md:hidden"
+          class="inline-flex items-center justify-center p-2 text-base-content hover:text-secondary-content focus:text-secondary-content focus:outline-none md:hidden"
           @click="toggleOpen"
         >
           <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -40,31 +71,24 @@ const toggleOpen = () => {
           </svg>
         </button>
       </div>
-      <nav
-        :class="{'flex': isOpen, 'hidden':!isOpen}"
-        class="grow flex-col items-center py-2 text-center md:flex md:flex-row md:justify-end lg:py-0"
-      >
-        <ul class="list-none space-y-2 md:inline-flex md:items-center md:space-y-0">
-          <li>
-            <NuxtLink
-              to="/create-instance"
-              class="border-b-2 border-transparent px-2 py-4 text-sm text-primary-content hover:border-secondary-content hover:text-secondary-content md:px-2
-            lg:px-6"
-            >
-              Criar instâncias
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/instances"
-              class="border-b-2 border-transparent px-2 py-4 text-sm text-primary-content hover:border-secondary-content hover:text-secondary-content md:px-2
-            lg:px-6"
-            >
-              Listar Instâncias
-            </NuxtLink>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li v-for="route in routes" :key="route.path">
+            <details>
+              <summary>
+                {{ route.label }}
+              </summary>
+              <ul class="rounded-t-none bg-base-300 p-2">
+                <li v-for="children in route.childrens" :key="children.path">
+                  <NuxtLink :to="route.path+children.path">
+                    {{ children.label }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </details>
           </li>
         </ul>
-      </nav>
+      </div>
     </div>
   </div>
 </template>

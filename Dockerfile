@@ -1,11 +1,13 @@
-FROM node:20-alpine
+FROM node:20-alpine AS base
 
-RUN npm i -g pnpm && npm cache clean -f
+RUN corepack enable
+
+USER node
 
 WORKDIR /app
 
 COPY . .
 
-RUN pnpm i
+RUN pnpm install 
 
 CMD ["tail", "-f", "/dev/null"]
