@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  dockease-app:
+    container_name: dockease-app
+    image: dockease-app:0.1
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - dockease
+
+networks:
+  dockease:
+    external: true
+
