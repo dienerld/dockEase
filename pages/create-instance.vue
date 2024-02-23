@@ -3,7 +3,7 @@ definePageMeta({
   layout: 'private'
 })
 useSeoMeta({
-  title: 'Criação de intâncias'
+  title: 'Criação de instâncias'
 })
 
 type FormService = {
@@ -17,7 +17,7 @@ const service = reactive<FormService>({
   envs: {}
 })
 
-async function handleSubmit () {
+async function handleSubmit() {
   const response = await $fetch('api/create-instance', {
     method: 'POST',
     body: JSON.stringify(service)
@@ -30,31 +30,27 @@ async function handleSubmit () {
 <template>
   <div class="flex h-full flex-col items-center justify-center">
     <form class="flex w-1/2 flex-col gap-4" @submit.prevent="handleSubmit">
-      <label class="form-control w-full">
+      <label>
         <span>
           Nome do serviço
         </span>
-        <input
+        <Input
           v-model="service.name"
-          class="input input-bordered w-full "
           type="text"
           placeholder="Nome do Serviço"
-        >
-      </label>
-      <label class="form-control w-full ">
+        /></label>
+      <label>
         <span>
           Nome da Imagem
         </span>
-        <input
+        <Input
           v-model="service.image"
-          class="input input-bordered w-full"
           type="text"
           placeholder="Nome da Imagem"
-        >
-      </label>
-      <button class="btn btn-primary">
+        /></label>
+      <Button>
         Enviar
-      </button>
+      </Button>
     </form>
   </div>
 </template>

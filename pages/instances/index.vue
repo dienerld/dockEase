@@ -47,24 +47,23 @@ async function getContainers () {
 
 <template>
   <div class="container mx-auto">
-    <input
+    <Input
       v-model="queries.filters.status"
       type="text"
-      class="input input-info"
-    >
-    <button class="btn btn-secondary" @click="getContainers">
+    />
+    <Button variant="secondary" @click="getContainers">
       Buscar
-    </button>
+    </Button>
     <div class="border border-white" />
-    <div v-if="pending" class="animate-pulse text-6xl text-primary-content">
+    <div v-if="pending" class="animate-pulse text-6xl text-primary-foreground">
       <p> Carregando</p>
     </div>
     <div v-else-if="!error">
-      <DockerCard v-for="container in containers" :key="container.id" :container />
+      <DockerCard v-for="container in containers" :key="container.id" :container="container" />
     </div>
 
     <div v-else>
-      <p class="text-3xl text-error-content">
+      <p class="text-3xl text-destructive">
         Error: {{ error }}
       </p>
     </div>

@@ -13,6 +13,8 @@ module.exports = {
         'no-undef': 'off'
       }
     }
-  ]
-
+  ],
+  rules: {
+    'space-before-function-paren': ['error', 'never']
+  }
 }

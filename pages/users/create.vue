@@ -21,22 +21,20 @@ async function sendMail () {
     <h2>Cadastro de Usuário</h2>
 
     <form class="mx-auto flex w-1/2 flex-col gap-2 bg-secondary p-4" @submit.prevent="sendMail">
-      <input
+      <Input
         v-model="user.name"
         type="text"
-        class="input input-sm input-bordered"
         placeholder="Nome"
-      >
-      <input
+      />
+      <Input
         v-model="user.email"
         type="text"
-        class="input input-sm input-bordered"
         placeholder="Email"
-      >
+      />
 
-      <button type="submit" class="btn btn-primary">
+      <Button type="submit">
         Enviar
-      </button>
+      </Button>
     </form>
   </div>
 </template>

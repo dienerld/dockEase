@@ -18,7 +18,7 @@ export async function sendEmail(data: EmailBody) {
   const response = await resend.emails.send({
     subject: data.subject,
     to: data.to,
-    from: 'Diener Dornelas <diener.ld@resend.dev>',
+    from: 'Diener Dornelas <diener.ld@dienerld.dev>',
     html: template.html,
   });
 
