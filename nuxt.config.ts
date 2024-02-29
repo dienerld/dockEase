@@ -46,4 +46,7 @@ export default defineNuxtConfig({
     classSuffix: '',
     storageKey: 'nuxt-color-mode',
   },
+  typescript: {
+    shim: false,
+  },
 });

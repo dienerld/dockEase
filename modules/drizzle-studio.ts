@@ -8,17 +8,17 @@ export default defineNuxtModule({
   setup(_options, nuxt) {
     if (!nuxt.options.dev) return;
 
-    startSubprocess(
-      {
-        command: 'npx',
-        args: ['drizzle-kit', 'studio'],
-        verbose: true,
-      },
-      {
-        id: 'nuxt-drizzle-kit--studio',
-        name: 'Drizzle Studio',
-      },
-    );
+    // startSubprocess(
+    //   {
+    //     command: 'yarn',
+    //     args: ['drizzle-kit', 'studio'],
+    //     verbose: true,
+    //   },
+    //   {
+    //     id: 'nuxt-drizzle-kit--studio',
+    //     name: 'Drizzle Studio',
+    //   },
+    // );
 
     addCustomTab({
       name: 'drizzle-studio',

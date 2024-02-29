@@ -6,14 +6,23 @@ export type TStatusContainer =
   | 'paused'
   | 'exited';
 
+export enum EStatus {
+  created = 'Criado',
+  restarting = 'Reiniciando',
+  running = 'Executando',
+  removing = 'Removendo',
+  paused = 'Pausado',
+  exited = 'Finalizado',
+}
+
 export type TContainer = {
   id: string;
   name: string;
   image: string;
   ports: {
-    PrivatePort: string;
-    PublicPort: string;
+    privatePort: number;
+    publicPort: number;
     type: string;
   }[];
-  status: TStatusContainer;
+  state: TStatusContainer;
 };

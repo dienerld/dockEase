@@ -17,7 +17,7 @@ const { data: containers, pending, error } = await useFetch<TContainer[]>('/api/
   }
 })
 
-async function getContainers () {
+async function getContainers() {
   pending.value = true
   try {
     const response = await $fetch<TContainer[]>('/api/instances', {
@@ -58,8 +58,15 @@ async function getContainers () {
     <div v-if="pending" class="animate-pulse text-6xl text-primary-foreground">
       <p> Carregando</p>
     </div>
-    <div v-else-if="!error">
-      <DockerCard v-for="container in containers" :key="container.id" :container="container" />
+    <div
+      v-else-if="!error"
+      class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2"
+    >
+      <DockerCard
+        v-for="container in containers"
+        :key="container.id"
+        :container="container"
+      />
     </div>
 
     <div v-else>

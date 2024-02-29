@@ -1,5 +1,6 @@
 import { promisify } from 'node:util';
 import Docker from 'dockerode';
+import { TContainer, TStatusContainer } from '~/composables/container.types';
 
 export type ListContainersFilters = {
   // Filtra os contêineres com base em seu status.
@@ -45,14 +46,25 @@ export default defineEventHandler(async (event) => {
 
   try {
     const containers = await listContainers(queries);
-    const mappedContainers = containers.map(
-      ({ Id, Names, Image, State, Ports }) => ({
-        id: Id,
-        name: Names[0],
-        image: Image,
-        state: State,
-        ports: Ports,
-      }),
+
+    const mappedContainers: TContainer[] = containers.map(
+      ({ Id, Names, Image, State, Ports }) => {
+        const ports = Ports.filter(({ IP }) => IP !== '::').map(
+          ({ PrivatePort, PublicPort, Type }) => ({
+            privatePort: PrivatePort,
+            publicPort: PublicPort,
+            type: Type,
+          }),
+        );
+
+        return {
+          id: Id,
+          name: Names[0].replace('/', ''),
+          image: Image,
+          state: State as TStatusContainer,
+          ports,
+        };
+      },
     );
     return mappedContainers;
   } catch (err) {

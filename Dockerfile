@@ -1,13 +1,9 @@
-FROM node:20-alpine AS base
-
-RUN corepack enable
-
-USER node
+FROM node:20-slim AS base
 
 WORKDIR /app
 
 COPY . .
 
-RUN pnpm install 
+RUN yarn
 
 CMD ["tail", "-f", "/dev/null"]
