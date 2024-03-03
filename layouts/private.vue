@@ -63,7 +63,7 @@ watchEffect(() => {
         </div>
       </aside>
 
-      <main>
+      <main class="pb-4">
         <slot />
       </main>
     </div>

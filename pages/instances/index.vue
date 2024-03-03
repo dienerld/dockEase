@@ -3,6 +3,10 @@ import type { TContainer } from '~/composables/container.types'
 definePageMeta({
   layout: 'private'
 })
+useSeoMeta({
+  title: 'Instâncias',
+  description: 'Listagem de instâncias'
+})
 
 const queries = reactive({
   all: false,
@@ -11,7 +15,7 @@ const queries = reactive({
   }
 
 })
-const { data: containers, pending, error } = await useFetch<TContainer[]>('/api/instances', {
+const { data: responseContainers, pending, error } = await useFetch<TContainer[]>('/api/instances', {
   query: {
     all: true
   }
@@ -34,7 +38,7 @@ async function getContainers() {
           }, {})
       }
     })
-    containers.value = response
+    responseContainers.value = response
     error.value = null
   } catch (err: any) {
     error.value = { name: err.name, message: err.message }
@@ -63,7 +67,7 @@ async function getContainers() {
       class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2"
     >
       <DockerCard
-        v-for="container in containers"
+        v-for="container in responseContainers"
         :key="container.id"
         :container="container"
       />

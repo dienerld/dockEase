@@ -13,16 +13,27 @@ type FormService = {
 }
 const service = reactive<FormService>({
   name: '',
-  image: '',
-  envs: {}
+  image: 'postgres:13-alpine',
+  envs: {
+    POSTGRES_PASSWORD: 'example',
+    POSTGRES_USER: 'example',
+    POSTGRES_DB: 'example'
+  }
 })
 
 async function handleSubmit() {
-  const response = await $fetch('api/create-instance', {
+  const envs = Object.entries(service.envs).map(([key, value]) => `${key.toUpperCase()}=${value}`)
+  const response = await $fetch('api/instances', {
     method: 'POST',
-    body: JSON.stringify(service)
+    body: JSON.stringify({
+      name: service.name,
+      Image: service.image,
+      Env: envs
+
+    })
   })
-  console.log({ data: response })
+
+  console.log(response)
 }
 
 </script>
@@ -47,8 +58,9 @@ async function handleSubmit() {
           v-model="service.image"
           type="text"
           placeholder="Nome da Imagem"
+          disabled
         /></label>
-      <Button>
+      <Button type="submit">
         Enviar
       </Button>
     </form>

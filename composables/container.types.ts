@@ -1,3 +1,5 @@
+import type Dockerode from 'dockerode';
+
 export type TStatusContainer =
   | 'created'
   | 'restarting'
@@ -26,3 +28,5 @@ export type TContainer = {
   }[];
   state: TStatusContainer;
 };
+
+export type ContainerInspect = Dockerode.ContainerInspectInfo;

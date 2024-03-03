@@ -1,6 +1,8 @@
 import { promisify } from 'node:util';
-import Docker from 'dockerode';
+import { ContainerInfo } from 'dockerode';
 import { TContainer, TStatusContainer } from '~/composables/container.types';
+import { docker } from '~/server/docker.instance';
+import { formatPorts } from '~/server/composables/format-ports';
 
 export type ListContainersFilters = {
   // Filtra os contêineres com base em seu status.
@@ -35,27 +37,19 @@ type ListContainersOptions = {
   filters: ListContainersFilters;
 };
 
-const docker = new Docker();
-
 export default defineEventHandler(async (event) => {
   const queries = getQuery(event) as ListContainersOptions;
 
-  const listContainers = promisify(docker.listContainers.bind(docker)) as (
-    options?: ListContainersOptions,
-  ) => Promise<Docker.ContainerInfo[]>;
+  const listContainers = promisify<ListContainersOptions, ContainerInfo[]>(
+    docker.listContainers.bind(docker),
+  );
 
   try {
     const containers = await listContainers(queries);
 
     const mappedContainers: TContainer[] = containers.map(
       ({ Id, Names, Image, State, Ports }) => {
-        const ports = Ports.filter(({ IP }) => IP !== '::').map(
-          ({ PrivatePort, PublicPort, Type }) => ({
-            privatePort: PrivatePort,
-            publicPort: PublicPort,
-            type: Type,
-          }),
-        );
+        const ports = formatPorts(Ports);
 
         return {
           id: Id,
@@ -67,13 +61,8 @@ export default defineEventHandler(async (event) => {
       },
     );
     return mappedContainers;
-  } catch (err) {
-    throw sendError(event, {
-      message: 'Error to get containers',
-      fatal: false,
-      name: 'Error',
-      statusCode: 400,
-      unhandled: false,
-    });
+  } catch (err: any) {
+    setResponseStatus(event, 500);
+    sendError(event, err.message);
   }
 });
